@@ -11,22 +11,19 @@ function getMessage(a, b) {
 	 return 'Переданное SVG-изображение содержит ' + a + ' объектов и ' + b * 4 + ' атрибутов';
 	}
 
-	else if (( typeof a ) === 'object' && ( typeof b ) === 'object' ) {
-		var artifactsSquare = arraysSum(a, b);
-
+	else if (( typeof a ) === 'object' && ( typeof b ) === 'object' ) {	
 		function arraysSum(array1, array2){ 
 			var sum = 0;
 			for(var i = 0; i < array1.length || i < array2.length; i++){
     		sum += array1[i] + array2[i];
     		} 
-
     return sum
 	}
+
+	var artifactsSquare = arraysSum(a, b);
 	 return 'Общая площадь артефактов сжатия: ' + artifactsSquare + ' пикселей';
 		}
-
 	else if (( typeof a ) === 'object' ) {
-		var amountOfRedPoints = arraySum(a);
 
 		function arraySum(array){ 
 			var sum = 0;
@@ -35,6 +32,7 @@ function getMessage(a, b) {
     		} 
     return sum
 	}
+	var amountOfRedPoints = arraySum(a);
 	 return 'Количество красных точек во всех строчках изображения: ' + amountOfRedPoints;
 	}
 }
