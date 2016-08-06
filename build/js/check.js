@@ -1,6 +1,6 @@
 function getMessage(a, b) {
 	if (( typeof a ) === 'boolean' ) {
-		if (a == true ){
+		if (a === true ){
 		     return 'Переданное GIF-изображение анимировано и содержит ' + b + ' кадров'
 		    }
 		    else {
@@ -11,7 +11,7 @@ function getMessage(a, b) {
 	 return 'Переданное SVG-изображение содержит ' + a + ' объектов и ' + b * 4 + ' атрибутов';
 	}
 
-	else if (( typeof a ) === 'object' && ( typeof b ) === 'object' ) {	
+	else if ( Array.isArray(a)  && Array.isArray(b)) {	
 		function arraysSum(array1, array2){ 
 			var sum = 0;
 			for(var i = 0; i < array1.length || i < array2.length; i++){
@@ -23,7 +23,7 @@ function getMessage(a, b) {
 	var artifactsSquare = arraysSum(a, b);
 	 return 'Общая площадь артефактов сжатия: ' + artifactsSquare + ' пикселей';
 		}
-	else if (( typeof a ) === 'object' ) {
+	else if ( Array.isArray(a)) {
 
 		function arraySum(array){ 
 			var sum = 0;
