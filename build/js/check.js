@@ -21,7 +21,7 @@ function getMessage(a, b) {
 	}
 
 	var artifactsSquare = arraysSum(a, b);
-	 return 'Общая площадь артефактов сжатия: ' + artifactsSquare + ' пикселей' + a + ' ' + b;
+	 return 'Общая площадь артефактов сжатия: ' + artifactsSquare + ' пикселей';
 		}
 	else if ( Array.isArray(a)) {
 
