@@ -15,13 +15,13 @@ function getMessage(a, b) {
 		function arraysSum(array1, array2){ 
 			var sum = 0;
 			for(var i = 0; i < array1.length || i < array2.length; i++){
-    		sum += array1[i] + array2[i];
+    		sum += array1[i] * array2[i];
     		} 
     return sum
 	}
 
 	var artifactsSquare = arraysSum(a, b);
-	 return 'Общая площадь артефактов сжатия: ' + artifactsSquare + ' пикселей';
+	 return 'Общая площадь артефактов сжатия: ' + artifactsSquare + ' пикселей' + a + ' ' + b;
 		}
 	else if ( Array.isArray(a)) {
 
