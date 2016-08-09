@@ -117,9 +117,20 @@
           (-this._resizeConstraint.side / 2) - this._ctx.lineWidth / 2,
           this._resizeConstraint.side - this._ctx.lineWidth / 2,
           this._resizeConstraint.side - this._ctx.lineWidth / 2);
+      // Восстановление состояния канваса, которое было до вызова ctx.save
+      // и последующего изменения системы координат. Нужно для того, чтобы
+      // следующий кадр рисовался с привычной системой координат, где точка
+      // 0 0 находится в левом верхнем углу холста, в противном случае
+      // некорректно сработает даже очистка холста или нужно будет использовать
+      // сложные рассчеты для координат прямоугольника, который нужно очистить.
+      this._ctx.restore();
+    },
+    overlay: function() {
       this._ctx.setLineDash([]);
       this._ctx.strokeStyle = 'transparent';
       this._ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+      this._ctx.save();
+      this._ctx.translate(this._container.width / 2, this._container.height / 2);
       this._ctx.beginPath();
       this._ctx.moveTo((-this._container.width / 2), (this._container.height / 2));
       this._ctx.lineTo((this._container.width / 2), (this._container.height / 2));
@@ -134,20 +145,18 @@
       this._ctx.closePath();
       this._ctx.stroke();
       this._ctx.fill('evenodd');
+      this._ctx.restore();
+    },
+    sizeBox: function() {
       var sizeBox = this._image.naturalWidth + ' X ' + this._image.naturalHeight;
       this._ctx.fillStyle = 'white';
       this._ctx.font = ( this._resizeConstraint.side / 20 + 'px Tahoma');
       this._ctx.textBaseline = 'bottom';
+      this._ctx.save();
+      this._ctx.translate(this._container.width / 2, this._container.height / 2);
       this._ctx.fillText(sizeBox, -sizeBox.length * ((this._resizeConstraint.side / 20) / 4 ), -(this._resizeConstraint.side / 2) - this._ctx.lineWidth);
-      // Восстановление состояния канваса, которое было до вызова ctx.save
-      // и последующего изменения системы координат. Нужно для того, чтобы
-      // следующий кадр рисовался с привычной системой координат, где точка
-      // 0 0 находится в левом верхнем углу холста, в противном случае
-      // некорректно сработает даже очистка холста или нужно будет использовать
-      // сложные рассчеты для координат прямоугольника, который нужно очистить.
       this._ctx.restore();
     },
-
     /**
      * Включение режима перемещения. Запоминается текущее положение курсора,
      * устанавливается флаг, разрешающий перемещение и добавляются обработчики,
@@ -266,6 +275,8 @@
 
       requestAnimationFrame(function() {
         this.redraw();
+        this.overlay();
+        this.sizeBox();
         window.dispatchEvent(new CustomEvent('resizerchange'));
       }.bind(this));
     },
